@@ -1,95 +1,31 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" data-theme="dark">
-<head>
-	<!-- 2025-04-14 Mon 14:53 -->
-	<meta charset="UTF-8" />
-	<meta name="description" content="" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="theme-color" content="#9ac2c2" />
-	<title>404 - Gio's site</title>
-	<link rel="canonical" href="https://giogiobestcat.github.io/Cybersecurity/writing-shellcode/" /><link rel="icon" type="image/png" href="https://giogiobestcat.github.io/favicon.png" />
-
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://giogiobestcat.github.io/apple-touch-icon.png" />
-<style type="text/css">
-	:root {--accent-color: #9ac2c2;}</style>
-
-			<link type="text/css" rel="stylesheet" href="https://giogiobestcat.github.io/style.css" />
-			<script type="text/javascript" defer  src="https://giogiobestcat.github.io/closable.js"></script>
-
-	<meta property="og:site_name" content="Gio&#x27;s site" />
-	<meta property="og:title" content="404 - Gio's site" />
-	<meta property="og:url" content="https://giogiobestcat.github.io/Cybersecurity/writing-shellcode/" />
-	<meta property="og:description" content="" /><meta property="og:image" content="https://giogiobestcat.github.io/card.png" /><meta property="og:locale" content="en_US" />
-</head>
-
-<body>
-<main id="main-content">
-		
-<h1></h1><ul>
-<li>
-<p>learning to write your own shellcode is integral for any attacker. Writing your own shellcode will allow you to do whatever you want to a compromised system. Want to add a new admin user to the target computer? Want it to recursively send its data to you, and then delete it? Shellcode, (from here the term payload comes) is the endgame of any attack.</p>
-</li>
-<li>
-<p>Shellcode must be self contained, in other words it must be PIC (Position Independent Code).</p>
-</li>
-<li>
-<p>To give an example, an ASM hello world program can store its "Hello, World!" string in the <code>.data</code> segment. We don't have that luxary.</p>
-<ul>
-<li>In shellcode, the bytes for the string "Hello, world!" must be mixed together with the bytes for the assembly instructions, since there aren’t definable or predictable memory segments.</li>
-<li>However, to access the string as data we need a pointer to it. When the shellcode gets executed, it could be any- where in memory. The string’s absolute memory address needs to be calcu- lated relative to EIP.</li>
-<li>This is why we overwrite the return address on the stack.</li>
-</ul>
-</li>
-<li>
-<p>There are several techniques to avoid writing shellcode that contains null bytes. One such technique, is making a second function that calls upwards to the function that "replaces" the return address with the value we stored on the stack. Since we are jumping backwards, according to <code>Two's complement</code> the value will be very large and prepended by <code>0xffffff....</code>. So there are no dangerous null bytes.</p>
-</li>
-<li>
-<p>Using the small registers as described in [[Assemby_and_RE]] like <code>al</code> for EAX, will allow us to write small values to them, without having the registers prepended with 0x0000....</p>
-</li>
-<li>
-<p>both of these methods can be seen below:</p>
-</li>
-</ul>
-<pre data-lang="asm" style="background-color:#2b303b;color:#c0c5ce;" class="language-asm "><code class="language-asm" data-lang="asm"><span style="color:#96b5b4;">BITS 32 </span><span style="color:#65737e;">; Tell nasm this is 32-bit code.
+<!doctype html><html data-theme=dark lang=en xmlns=http://www.w3.org/1999/xhtml><head><meta charset=UTF-8><meta name=description><meta content="width=device-width,initial-scale=1" name=viewport><meta content=#9ac2c2 name=theme-color><title>404 - Gio's site</title><link href=https://giogiowastaken.github.io/Cybersecurity/writing-shellcode/ rel=canonical><link href=https://giogiowastaken.github.io/favicon.png rel=icon type=image/png><link href=https://giogiowastaken.github.io/apple-touch-icon.png rel=apple-touch-icon sizes=180x180 type=image/png><style>:root{--accent-color:#9ac2c2}</style><link href=https://giogiowastaken.github.io/style.css rel=stylesheet><script defer src=https://giogiowastaken.github.io/closable.js></script><meta content="Gio's site" property=og:site_name><meta content="404 - Gio's site" property=og:title><meta content=https://giogiowastaken.github.io/Cybersecurity/writing-shellcode/ property=og:url><meta property=og:description><meta content=https://giogiowastaken.github.io/card.png property=og:image><meta content=en_US property=og:locale><body><main id=main-content><h1></h1><ul><li><p>learning to write your own shellcode is integral for any attacker. Writing your own shellcode will allow you to do whatever you want to a compromised system. Want to add a new admin user to the target computer? Want it to recursively send its data to you, and then delete it? Shellcode, (from here the term payload comes) is the endgame of any attack.</p><li><p>Shellcode must be self contained, in other words it must be PIC (Position Independent Code).</p><li><p>To give an example, an ASM hello world program can store its "Hello, World!" string in the <code>.data</code> segment. We don't have that luxary.</p> <ul><li>In shellcode, the bytes for the string "Hello, world!" must be mixed together with the bytes for the assembly instructions, since there aren’t definable or predictable memory segments.<li>However, to access the string as data we need a pointer to it. When the shellcode gets executed, it could be any- where in memory. The string’s absolute memory address needs to be calcu- lated relative to EIP.<li>This is why we overwrite the return address on the stack.</ul><li><p>There are several techniques to avoid writing shellcode that contains null bytes. One such technique, is making a second function that calls upwards to the function that "replaces" the return address with the value we stored on the stack. Since we are jumping backwards, according to <code>Two's complement</code> the value will be very large and prepended by <code>0xffffff....</code>. So there are no dangerous null bytes.</p><li><p>Using the small registers as described in [[Assemby_and_RE]] like <code>al</code> for EAX, will allow us to write small values to them, without having the registers prepended with 0x0000....</p><li><p>both of these methods can be seen below:</p></ul><pre class=language-asm data-lang=asm style=color:#c0c5ce;background-color:#2b303b><code class=language-asm data-lang=asm><span style=color:#96b5b4>BITS 32 </span><span style=color:#65737e>; Tell nasm this is 32-bit code.
 </span><span>
-</span><span style="color:#b48ead;">jmp </span><span style="color:#8fa1b3;">short one</span><span style="color:#65737e;"> ; Jump down to a call at the end.
+</span><span style=color:#b48ead>jmp </span><span style=color:#8fa1b3>short one</span><span style=color:#65737e> ; Jump down to a call at the end.
 </span><span>
-</span><span style="color:#8fa1b3;">two:
+</span><span style=color:#8fa1b3>two:
 </span><span>
 </span><span>
-</span><span style="color:#65737e;">; ssize_t write(int fd, const void *buf, size_t count);
+</span><span style=color:#65737e>; ssize_t write(int fd, const void *buf, size_t count);
 </span><span>
-</span><span style="color:#b48ead;">pop </span><span style="color:#bf616a;">ecx</span><span style="color:#65737e;"> ; Pop the return address (string ptr) into ecx.
-</span><span style="color:#b48ead;">xor </span><span style="color:#bf616a;">eax</span><span>, </span><span style="color:#bf616a;">eax</span><span style="color:#65737e;"> ; Zero out full 32 bits of eax register.
-</span><span style="color:#b48ead;">mov </span><span style="color:#bf616a;">al</span><span>, </span><span style="color:#d08770;">4</span><span style="color:#65737e;"> ; Write syscall #4 to the low byte of eax.
-</span><span style="color:#b48ead;">xor </span><span style="color:#bf616a;">ebx</span><span>, </span><span style="color:#bf616a;">ebx</span><span style="color:#65737e;"> ; Zero out ebx.
-</span><span style="color:#b48ead;">inc </span><span style="color:#bf616a;">ebx</span><span style="color:#65737e;"> ; Increment ebx to 1, STDOUT file descriptor.
-</span><span style="color:#b48ead;">xor </span><span style="color:#bf616a;">edx</span><span>, </span><span style="color:#bf616a;">edx
-</span><span style="color:#b48ead;">mov </span><span style="color:#bf616a;">dl</span><span>, </span><span style="color:#d08770;">15</span><span style="color:#65737e;"> ; Length of the string
-</span><span style="color:#b48ead;">int </span><span style="color:#d08770;">0x80</span><span style="color:#65737e;"> ; Do syscall: write(1, string, 14)
+</span><span style=color:#b48ead>pop </span><span style=color:#bf616a>ecx</span><span style=color:#65737e> ; Pop the return address (string ptr) into ecx.
+</span><span style=color:#b48ead>xor </span><span style=color:#bf616a>eax</span><span>, </span><span style=color:#bf616a>eax</span><span style=color:#65737e> ; Zero out full 32 bits of eax register.
+</span><span style=color:#b48ead>mov </span><span style=color:#bf616a>al</span><span>, </span><span style=color:#d08770>4</span><span style=color:#65737e> ; Write syscall #4 to the low byte of eax.
+</span><span style=color:#b48ead>xor </span><span style=color:#bf616a>ebx</span><span>, </span><span style=color:#bf616a>ebx</span><span style=color:#65737e> ; Zero out ebx.
+</span><span style=color:#b48ead>inc </span><span style=color:#bf616a>ebx</span><span style=color:#65737e> ; Increment ebx to 1, STDOUT file descriptor.
+</span><span style=color:#b48ead>xor </span><span style=color:#bf616a>edx</span><span>, </span><span style=color:#bf616a>edx
+</span><span style=color:#b48ead>mov </span><span style=color:#bf616a>dl</span><span>, </span><span style=color:#d08770>15</span><span style=color:#65737e> ; Length of the string
+</span><span style=color:#b48ead>int </span><span style=color:#d08770>0x80</span><span style=color:#65737e> ; Do syscall: write(1, string, 14)
 </span><span>
-</span><span style="color:#65737e;">; void _exit(int status);
+</span><span style=color:#65737e>; void _exit(int status);
 </span><span>
-</span><span style="color:#b48ead;">mov </span><span style="color:#bf616a;">al</span><span>, </span><span style="color:#d08770;">1</span><span style="color:#65737e;"> ; Exit syscall #1, the top 3 bytes are still zeroed.
-</span><span style="color:#b48ead;">dec </span><span style="color:#bf616a;">ebx</span><span style="color:#65737e;"> ; Decrement ebx back down to 0 for status = 0.
-</span><span style="color:#b48ead;">int </span><span style="color:#d08770;">0x80</span><span style="color:#65737e;"> ; Do syscall: exit(0)
+</span><span style=color:#b48ead>mov </span><span style=color:#bf616a>al</span><span>, </span><span style=color:#d08770>1</span><span style=color:#65737e> ; Exit syscall #1, the top 3 bytes are still zeroed.
+</span><span style=color:#b48ead>dec </span><span style=color:#bf616a>ebx</span><span style=color:#65737e> ; Decrement ebx back down to 0 for status = 0.
+</span><span style=color:#b48ead>int </span><span style=color:#d08770>0x80</span><span style=color:#65737e> ; Do syscall: exit(0)
 </span><span>
 </span><span>
-</span><span style="color:#8fa1b3;">one:
+</span><span style=color:#8fa1b3>one:
 </span><span>
-</span><span style="color:#b48ead;">call </span><span style="color:#8fa1b3;">two</span><span style="color:#65737e;"> ; Call back upwards to avoid null bytes
-</span><span style="color:#96b5b4;">db </span><span style="color:#a3be8c;">&quot;Hello, world!&quot;</span><span>, </span><span style="color:#d08770;">0x0a</span><span>, </span><span style="color:#d08770;">0x0d</span><span style="color:#65737e;"> ; with newline and carriage return bytes.
+</span><span style=color:#b48ead>call </span><span style=color:#8fa1b3>two</span><span style=color:#65737e> ; Call back upwards to avoid null bytes
+</span><span style=color:#96b5b4>db </span><span style=color:#a3be8c>"Hello, world!"</span><span>, </span><span style=color:#d08770>0x0a</span><span>, </span><span style=color:#d08770>0x0d</span><span style=color:#65737e> ; with newline and carriage return bytes.
 </span><span>
-</span></code></pre>
-<p>"Hello World!\x0A\x0D" will be value at the top of the stack, so it will be popped into ECX, instead of the return address. We now have our own <code>data</code> segment, in our self contained shellcode!</p>
-
-
-		
-
-	</main>
-	<footer id="site-footer">
-</footer>
-
-
-</body>
-</html>
+</span></code></pre><p>"Hello World!\x0A\x0D" will be value at the top of the stack, so it will be popped into ECX, instead of the return address. We now have our own <code>data</code> segment, in our self contained shellcode!</main><footer id=site-footer></footer>

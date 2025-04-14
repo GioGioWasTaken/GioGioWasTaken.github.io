@@ -1,59 +1,13 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" data-theme="dark">
-<head>
-	<!-- 2025-04-14 Mon 14:53 -->
-	<meta charset="UTF-8" />
-	<meta name="description" content="" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="theme-color" content="#9ac2c2" />
-	<title>404 - Gio's site</title>
-	<link rel="canonical" href="https://giogiobestcat.github.io/Cybersecurity/stack-pivot/" /><link rel="icon" type="image/png" href="https://giogiobestcat.github.io/favicon.png" />
-
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://giogiobestcat.github.io/apple-touch-icon.png" />
-<style type="text/css">
-	:root {--accent-color: #9ac2c2;}</style>
-
-			<link type="text/css" rel="stylesheet" href="https://giogiobestcat.github.io/style.css" />
-			<script type="text/javascript" defer  src="https://giogiobestcat.github.io/closable.js"></script>
-
-	<meta property="og:site_name" content="Gio&#x27;s site" />
-	<meta property="og:title" content="404 - Gio's site" />
-	<meta property="og:url" content="https://giogiobestcat.github.io/Cybersecurity/stack-pivot/" />
-	<meta property="og:description" content="" /><meta property="og:image" content="https://giogiobestcat.github.io/card.png" /><meta property="og:locale" content="en_US" />
-</head>
-
-<body>
-<main id="main-content">
-		
-<h1></h1><h1 id="stack-pivoting">Stack pivoting</h1>
-<p>Stack pivoting, is a general name for any exploitation technique that relies on moving ESP to a new address. This can have many uses.</p>
-<p>(The below is in 32 bit. Of course, the numbers vary in 64 bit systems.)</p>
-<h2 id="ebp2ret">EBP2RET</h2>
-<p>Situation: One can overwrite the saved <code>EBP</code> of the previous stack frame, but not the return address. We want to jump to <code>0xDEADBEEF</code>.</p>
-<p><code>0xCAFEBABE</code> points to <code>0xDEADBEEF</code></p>
-<p>solution: overwrite <code>EBP</code> with <code>0xCAFEBABE-0x4</code>. This abuses the <code>leave</code> and <code>ret</code> instructions.</p>
-<p>[!ATTENTION] The reason the overwrite also overwrites the value of <code>EBP</code> register, and not only the <code>EBP</code> value pushedto the stack, is that the <strong>current frame's</strong>  <code>EBP</code> register points to the location of the saved ebp.</p>
-<pre data-lang="asm" style="background-color:#2b303b;color:#c0c5ce;" class="language-asm "><code class="language-asm" data-lang="asm"><span>
-</span><span style="color:#b48ead;">leave</span><span style="color:#8fa1b3;">:
-</span><span style="color:#8fa1b3;">    </span><span style="color:#b48ead;">mov </span><span style="color:#bf616a;">ESP</span><span>, </span><span style="color:#bf616a;">EBP </span><span style="color:#8fa1b3;">// move </span><span style="color:#bf616a;">EBP </span><span style="color:#8fa1b3;">of current frame to </span><span style="color:#bf616a;">ESP 
-</span><span style="color:#8fa1b3;">    </span><span style="color:#b48ead;">pop </span><span style="color:#bf616a;">EBP </span><span style="color:#8fa1b3;">// 
+<!doctype html><html data-theme=dark lang=en xmlns=http://www.w3.org/1999/xhtml><head><meta charset=UTF-8><meta name=description><meta content="width=device-width,initial-scale=1" name=viewport><meta content=#9ac2c2 name=theme-color><title>404 - Gio's site</title><link href=https://giogiowastaken.github.io/Cybersecurity/stack-pivot/ rel=canonical><link href=https://giogiowastaken.github.io/favicon.png rel=icon type=image/png><link href=https://giogiowastaken.github.io/apple-touch-icon.png rel=apple-touch-icon sizes=180x180 type=image/png><style>:root{--accent-color:#9ac2c2}</style><link href=https://giogiowastaken.github.io/style.css rel=stylesheet><script defer src=https://giogiowastaken.github.io/closable.js></script><meta content="Gio's site" property=og:site_name><meta content="404 - Gio's site" property=og:title><meta content=https://giogiowastaken.github.io/Cybersecurity/stack-pivot/ property=og:url><meta property=og:description><meta content=https://giogiowastaken.github.io/card.png property=og:image><meta content=en_US property=og:locale><body><main id=main-content><h1></h1><h1 id=stack-pivoting>Stack pivoting</h1><p>Stack pivoting, is a general name for any exploitation technique that relies on moving ESP to a new address. This can have many uses.<p>(The below is in 32 bit. Of course, the numbers vary in 64 bit systems.)<h2 id=ebp2ret>EBP2RET</h2><p>Situation: One can overwrite the saved <code>EBP</code> of the previous stack frame, but not the return address. We want to jump to <code>0xDEADBEEF</code>.<p><code>0xCAFEBABE</code> points to <code>0xDEADBEEF</code><p>solution: overwrite <code>EBP</code> with <code>0xCAFEBABE-0x4</code>. This abuses the <code>leave</code> and <code>ret</code> instructions.<p>[!ATTENTION] The reason the overwrite also overwrites the value of <code>EBP</code> register, and not only the <code>EBP</code> value pushedto the stack, is that the <strong>current frame's</strong> <code>EBP</code> register points to the location of the saved ebp.<pre class=language-asm data-lang=asm style=color:#c0c5ce;background-color:#2b303b><code class=language-asm data-lang=asm><span>
+</span><span style=color:#b48ead>leave</span><span style=color:#8fa1b3>:
+</span><span style=color:#8fa1b3>    </span><span style=color:#b48ead>mov </span><span style=color:#bf616a>ESP</span><span>, </span><span style=color:#bf616a>EBP </span><span style=color:#8fa1b3>// move </span><span style=color:#bf616a>EBP </span><span style=color:#8fa1b3>of current frame to </span><span style=color:#bf616a>ESP 
+</span><span style=color:#8fa1b3>    </span><span style=color:#b48ead>pop </span><span style=color:#bf616a>EBP </span><span style=color:#8fa1b3>// 
 </span><span>
-</span><span style="color:#b48ead;">pop </span><span style="color:#bf616a;">EBP</span><span style="color:#8fa1b3;">:
-</span><span style="color:#8fa1b3;">    </span><span style="color:#b48ead;">mov </span><span style="color:#bf616a;">EBP</span><span>, [</span><span style="color:#bf616a;">ESP</span><span>] </span><span style="color:#8fa1b3;">// = saved </span><span style="color:#bf616a;">ebp </span><span style="color:#8fa1b3;">value
-</span><span style="color:#8fa1b3;">    </span><span style="color:#b48ead;">add </span><span style="color:#bf616a;">ESP</span><span>, </span><span style="color:#d08770;">0x4 </span><span style="color:#8fa1b3;">// increment </span><span style="color:#bf616a;">ESP </span><span style="color:#8fa1b3;">since the stack moved.
+</span><span style=color:#b48ead>pop </span><span style=color:#bf616a>EBP</span><span style=color:#8fa1b3>:
+</span><span style=color:#8fa1b3>    </span><span style=color:#b48ead>mov </span><span style=color:#bf616a>EBP</span><span>, [</span><span style=color:#bf616a>ESP</span><span>] </span><span style=color:#8fa1b3>// = saved </span><span style=color:#bf616a>ebp </span><span style=color:#8fa1b3>value
+</span><span style=color:#8fa1b3>    </span><span style=color:#b48ead>add </span><span style=color:#bf616a>ESP</span><span>, </span><span style=color:#d08770>0x4 </span><span style=color:#8fa1b3>// increment </span><span style=color:#bf616a>ESP </span><span style=color:#8fa1b3>since the stack moved.
 </span><span>
-</span><span style="color:#b48ead;">ret</span><span style="color:#8fa1b3;">:
-</span><span style="color:#8fa1b3;">    </span><span style="color:#b48ead;">jmp </span><span>[</span><span style="color:#bf616a;">ESP</span><span>] </span><span style="color:#8fa1b3;">// </span><span style="color:#bf616a;">ESP </span><span style="color:#8fa1b3;">= </span><span style="color:#d08770;">0xCAFEBABE </span><span style="color:#8fa1b3;">now</span><span>, </span><span style="color:#b48ead;">and </span><span style="color:#8fa1b3;">it points to our target address.
+</span><span style=color:#b48ead>ret</span><span style=color:#8fa1b3>:
+</span><span style=color:#8fa1b3>    </span><span style=color:#b48ead>jmp </span><span>[</span><span style=color:#bf616a>ESP</span><span>] </span><span style=color:#8fa1b3>// </span><span style=color:#bf616a>ESP </span><span style=color:#8fa1b3>= </span><span style=color:#d08770>0xCAFEBABE </span><span style=color:#8fa1b3>now</span><span>, </span><span style=color:#b48ead>and </span><span style=color:#8fa1b3>it points to our target address.
 </span><span>
-</span></code></pre>
-
-
-		
-
-	</main>
-	<footer id="site-footer">
-</footer>
-
-
-</body>
-</html>
+</span></code></pre></main><footer id=site-footer></footer>

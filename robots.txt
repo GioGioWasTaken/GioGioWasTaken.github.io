@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 Allow: /
-Sitemap: https://giogiobestcat.github.io/sitemap.xml
+Sitemap: https://giogiowastaken.github.io/sitemap.xml
