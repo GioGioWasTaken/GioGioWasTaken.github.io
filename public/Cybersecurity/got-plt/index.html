@@ -1,0 +1,20 @@
+<!doctype html><html data-theme=dark lang=en xmlns=http://www.w3.org/1999/xhtml><head><meta charset=UTF-8><meta name=description><meta content="width=device-width,initial-scale=1" name=viewport><meta content=#9ac2c2 name=theme-color><title>404 - Gio's site</title><link href=https://giogiowastaken.github.io/Cybersecurity/got-plt/ rel=canonical><link href=https://giogiowastaken.github.io/favicon.png rel=icon type=image/png><link href=https://giogiowastaken.github.io/apple-touch-icon.png rel=apple-touch-icon sizes=180x180 type=image/png><style>:root{--accent-color:#9ac2c2}</style><link href=https://giogiowastaken.github.io/style.css rel=stylesheet><script defer src=https://giogiowastaken.github.io/closable.js></script><meta content="Gio's site" property=og:site_name><meta content="404 - Gio's site" property=og:title><meta content=https://giogiowastaken.github.io/Cybersecurity/got-plt/ property=og:url><meta property=og:description><meta content=https://giogiowastaken.github.io/card.png property=og:image><meta content=en_US property=og:locale><body><main id=main-content><h1></h1><h1 id=got>GOT</h1><p>Without PIE, the addreses of the GOT table and PLT table are known statically.<p>Pseudo code to explain them:<pre style=color:#c0c5ce;background-color:#2b303b><code><span>; In the main program
+</span><span>call read@plt
+</span><span>
+</span><span>; In the PLT (Procedure Linkage Table)
+</span><span>read@plt:
+</span><span>    jmp *read@got
+</span><span>    push #relocation_offset
+</span><span>    jmp .resolve
+</span><span>
+</span><span>; In the dynamic linker's resolver
+</span><span>.resolve:
+</span><span>    ; Find the actual address of read in libc
+</span><span>    ; Write this address to read@got
+</span><span>    jmp read@libc
+</span><span>
+</span><span>; In the GOT (Global Offset Table)
+</span><span>read@got: 
+</span><span>    .quad 0x4141414141414141  ; Initially points back to PLT, later filled with actual address
+</span><span>    ;  ...or  .quad [jmp .resolve]
+</span></code></pre><h1 id=note>Note:</h1><h2 id=fixed-vs-randomized-addresses>Fixed vs. Randomized Addresses:</h2><p>With PIE disabled, the GOT's location is fixed and known. However, the contents of the GOT (addresses in libc) are still randomized by ASLR. Essentially, while I know statically the value of func@got(a fixed memory address), I don't know the value of *func@got.<h2 id=the-attacker-s-challenge>The Attacker's Challenge:</h2><p>The attacker knows where the GOT is but doesn't know what values it contains. They can't simply write a new address to the GOT because they don't know the correct address to write (due to ASLR).<p>If he knew what value it contains, he could use this information by calculating the offset of said function, from the target function.<h2 id=a-clever-workaround-that-might-sometimes-work>A Clever Workaround, that might sometimes work:</h2><p>Instead of writing a full address, the attacker modifies the existing address in the GOT. They use a gadget that adds a value to the contents of a memory location. By carefully choosing this value, they can adjust the existing libc address to point to their desired function (one_gadget).<p>Essentially, even if I have no way of leaking *(func@got), it doesn't matter if i have a gadget that does:<p>add (func@got), value<p>seeing as add (similarly to functions that can be used to leak its value like puts), takes a pointer to a value, and reads it for me.<p>Look for gadgets that use a register or memory address in your control, as a pointer.<p>searching for [] might be wise.<h2 id=why-this-works>Why This Works:</h2><p>The offset between functions within libc remains constant, even when ASLR randomizes the base address. By adding or subtracting this offset from the existing GOT entry, the attacker can redirect execution without knowing absolute addresses.</main><footer id=site-footer></footer>
