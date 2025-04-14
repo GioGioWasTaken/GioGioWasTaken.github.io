@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" data-theme="dark">
+<head>
+	<!-- 2025-04-14 Mon 14:53 -->
+	<meta charset="UTF-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#9ac2c2" />
+	<title>404 - Gio's site</title>
+	<link rel="canonical" href="https://giogiobestcat.github.io/Cybersecurity/buffering-types/" /><link rel="icon" type="image/png" href="https://giogiobestcat.github.io/favicon.png" />
+
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://giogiobestcat.github.io/apple-touch-icon.png" />
+<style type="text/css">
+	:root {--accent-color: #9ac2c2;}</style>
+
+			<link type="text/css" rel="stylesheet" href="https://giogiobestcat.github.io/style.css" />
+			<script type="text/javascript" defer  src="https://giogiobestcat.github.io/closable.js"></script>
+
+	<meta property="og:site_name" content="Gio&#x27;s site" />
+	<meta property="og:title" content="404 - Gio's site" />
+	<meta property="og:url" content="https://giogiobestcat.github.io/Cybersecurity/buffering-types/" />
+	<meta property="og:description" content="" /><meta property="og:image" content="https://giogiobestcat.github.io/card.png" /><meta property="og:locale" content="en_US" />
+</head>
+
+<body>
+<main id="main-content">
+		
+<h1></h1><h1 id="there-are-three-types-of-buffering-types">There are three types of buffering types</h1>
+<ul>
+<li>
+<p>The types can be switched to and fro using the <code>setvbuf</code> C standard library function. The types are as follows:</p>
+<ul>
+<li>unbuffered:</li>
+</ul>
+<ul>
+<li>When an output stream is unbuffered, information appears on the destination file or terminal as soon  as  written.</li>
+<li><code>stderr</code> is always unbuffered.</li>
+<li>referred to as <code>_IONBF</code>.</li>
+</ul>
+<ul>
+<li>line buffered:</li>
+</ul>
+<ul>
+<li>when it is line buffered, characters are saved up until a newline is output  or  input is  read  from  any stream attached to a terminal device (typically stdin).</li>
+<li><code>referred to as _IOLBF</code></li>
+</ul>
+<ul>
+<li><code>Default</code>: block buffered:</li>
+</ul>
+<ul>
+<li>when  it  is  block buffered(default),  many  characters are saved up and written as a block</li>
+</ul>
+<ul>
+<li>the function can also take a parameter fully buffered, <code>referred to as _IOFBF</code></li>
+</ul>
+</li>
+<li>
+<p>The function <code>fflush</code> may be used to force  the  block  out  early.</p>
+</li>
+<li>
+<p>They of course each have numerical values:</p>
+<ul>
+<li>IONBF: 0 (Unbuffered):</li>
+</ul>
+<ul>
+<li>Since this one is unbuffered, a null pointer, and a size of 0 are passed as parameters.</li>
+</ul>
+<ul>
+<li>IOLBF: 1 (Line buffered)</li>
+<li>IOFBF: 2 (Fully buffered)</li>
+</ul>
+</li>
+<li>
+<p>Why use buffers?</p>
+</li>
+</ul>
+<ul>
+<li>Buffers reduce the number of read() and write() system calls, improving performance by minimizing the overhead of kernel-user space transitions.</li>
+</ul>
+<h1 id="write-order">Write order</h1>
+<p>Buffers, in general, are written in memory from lower to higher memory. Seeing as the stack grows downwards, if we overflow a buffer at the top of the stack, it will reach higher and higher addresses.</p>
+<p><img src="https://giogiobestcat.github.io/Cybersecurity/buffering-types/assets/buffer_write_order.png" alt="buffers write demonstration:" /></p>
+
+
+		
+
+	</main>
+	<footer id="site-footer">
+</footer>
+
+
+</body>
+</html>

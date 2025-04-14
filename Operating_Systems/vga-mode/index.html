@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" data-theme="dark">
+<head>
+	<!-- 2025-04-14 Mon 14:53 -->
+	<meta charset="UTF-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#9ac2c2" />
+	<title>404 - Gio's site</title>
+	<link rel="canonical" href="https://giogiobestcat.github.io/Operating_Systems/vga-mode/" /><link rel="icon" type="image/png" href="https://giogiobestcat.github.io/favicon.png" />
+
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://giogiobestcat.github.io/apple-touch-icon.png" />
+<style type="text/css">
+	:root {--accent-color: #9ac2c2;}</style>
+
+			<link type="text/css" rel="stylesheet" href="https://giogiobestcat.github.io/style.css" />
+			<script type="text/javascript" defer  src="https://giogiobestcat.github.io/closable.js"></script>
+
+	<meta property="og:site_name" content="Gio&#x27;s site" />
+	<meta property="og:title" content="404 - Gio's site" />
+	<meta property="og:url" content="https://giogiobestcat.github.io/Operating_Systems/vga-mode/" />
+	<meta property="og:description" content="" /><meta property="og:image" content="https://giogiobestcat.github.io/card.png" /><meta property="og:locale" content="en_US" />
+</head>
+
+<body>
+<main id="main-content">
+		
+<h1></h1><p>Once we enter 32 bit protected mode, we no longer have access to BIOS interrupts. So what do we do if we want to , say, print a character to the screen?</p>
+<h1 id="vga-mode-3">VGA mode 3:</h1>
+<p>VGA video mode 3, allows direct memory access to a linear address containing each character and its associated attributes.
+To access a particular character:
+<code>position = (y_position * characters_per_line) + x_position;</code>
+Each character is represented as an ascii value, and a colour byte.</p>
+<p>the color byte is defined as such:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Bit 76543210
+</span><span>    ||||||||
+</span><span>    |||||^^^-fore colour
+</span><span>    ||||^----fore colour bright bit
+</span><span>    |^^^-----back colour
+</span><span>    ^--------back colour bright bit OR enables blinking Text
+</span></code></pre>
+<p><img src="https://giogiobestcat.github.io/Operating_Systems/vga-mode/assets/Colours.png" alt="Colours" /></p>
+
+
+		
+
+	</main>
+	<footer id="site-footer">
+</footer>
+
+
+</body>
+</html>

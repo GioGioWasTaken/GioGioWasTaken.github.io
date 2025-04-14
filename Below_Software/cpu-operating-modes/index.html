@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" data-theme="dark">
+<head>
+	<!-- 2025-04-14 Mon 14:53 -->
+	<meta charset="UTF-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#9ac2c2" />
+	<title>404 - Gio's site</title>
+	<link rel="canonical" href="https://giogiobestcat.github.io/Below_Software/cpu-operating-modes/" /><link rel="icon" type="image/png" href="https://giogiobestcat.github.io/favicon.png" />
+
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://giogiobestcat.github.io/apple-touch-icon.png" />
+<style type="text/css">
+	:root {--accent-color: #9ac2c2;}</style>
+
+			<link type="text/css" rel="stylesheet" href="https://giogiobestcat.github.io/style.css" />
+			<script type="text/javascript" defer  src="https://giogiobestcat.github.io/closable.js"></script>
+
+	<meta property="og:site_name" content="Gio&#x27;s site" />
+	<meta property="og:title" content="404 - Gio's site" />
+	<meta property="og:url" content="https://giogiobestcat.github.io/Below_Software/cpu-operating-modes/" />
+	<meta property="og:description" content="" /><meta property="og:image" content="https://giogiobestcat.github.io/card.png" /><meta property="og:locale" content="en_US" />
+</head>
+
+<body>
+<main id="main-content">
+		
+<h1></h1><h2 id="overview">Overview</h2>
+<p>The <code>CPU operating modes</code>, or <code>CPU execution mdoes</code> dictate how the <code>CPU</code> accesses memory, handles instructions, and interacts with other system components.</p>
+<h3 id="real-mode">Real mode</h3>
+<ul>
+<li>The initial operating mode of x86 CPUs, dating back to the original Intel 8086 processor.</li>
+<li>It is characterized by:
+<ul>
+<li>20-bit addressing, allowing access to 1 MB of memory.</li>
+<li>No memory protection or multitasking.</li>
+<li>Direct access to hardware and peripherals.</li>
+<li>It does not support virtual memory
+Since old registers were 16 bits, the theoretical amount of memory that could be accessesed was smaller than the actual amount of memory that was available. To resolve this we used <code>segmentation</code> which allows more efficient use of memory. The formula for <code>segmentation</code> goes as following:</li>
+</ul>
+</li>
+</ul>
+<p>Physical address = 16 * segmentat_selector + offset</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>hex((0x2000 &lt;&lt; 4) + 0x0010)
+</span><span>&#39;0x20010&#39; 
+</span></code></pre>
+<p><em>NOTE</em>: shifting 4 bits to the left (&lt;&lt;) is akin to multipling by 16, since we are shifting in base 2.</p>
+<p><strong>Use Case</strong>: BIOS initialization, DOS-based systems, and early boot stages of modern operating systems. Some kernel code is written in <code>real</code> mode, before the kernel moves to protected mode.</p>
+<h3 id="system-management-mode">System Management Mode:</h3>
+<ul>
+<li>The most privilged mode. Its memory is protected even from the OS. Its job is to do stuff almost exclusively on hardware. E.g. Power management.</li>
+</ul>
+<h3 id="protected-mode">Protected mode</h3>
+<p><em>NOTE</em> : <code>virtual-8086</code> mode isn't actually a mode. It's an attribute that can be enabled from within protected mode. It allows running <code>Real Mode</code> inside <code>protected mode</code>, for backwards comptability with older programs.</p>
+<p>Characterized by:</p>
+<ul>
+<li>32-bit addressing, allowing access to 4 GB of memory (and up to 64 GB with PAE).</li>
+<li>Memory protection, enabling isolation of processes to prevent them from interfering with each other.</li>
+<li>Supports multitasking and advanced features like virtual memory.</li>
+</ul>
+<p>Read more at:
+[[Protected_Mode]]</p>
+<h3 id="unreal-mode">Unreal mode</h3>
+<p><strong>Use Case:</strong> Modern operating systems, applications that require memory protection and multitasking.</p>
+
+
+		
+
+	</main>
+	<footer id="site-footer">
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" data-theme="dark">
+<head>
+	<!-- 2025-04-14 Mon 14:53 -->
+	<meta charset="UTF-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#9ac2c2" />
+	<title>404 - Gio's site</title>
+	<link rel="canonical" href="https://giogiobestcat.github.io/Cybersecurity/rop/" /><link rel="icon" type="image/png" href="https://giogiobestcat.github.io/favicon.png" />
+
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://giogiobestcat.github.io/apple-touch-icon.png" />
+<style type="text/css">
+	:root {--accent-color: #9ac2c2;}</style>
+
+			<link type="text/css" rel="stylesheet" href="https://giogiobestcat.github.io/style.css" />
+			<script type="text/javascript" defer  src="https://giogiobestcat.github.io/closable.js"></script>
+
+	<meta property="og:site_name" content="Gio&#x27;s site" />
+	<meta property="og:title" content="404 - Gio's site" />
+	<meta property="og:url" content="https://giogiobestcat.github.io/Cybersecurity/rop/" />
+	<meta property="og:description" content="" /><meta property="og:image" content="https://giogiobestcat.github.io/card.png" /><meta property="og:locale" content="en_US" />
+</head>
+
+<body>
+<main id="main-content">
+		
+<h1></h1><h1 id="rop">ROP :</h1>
+<p>The basis of ROP is chaining together small chunks of code already present within the binary itself in such a way to do what you wish. This often involves passing parameters to functions already present within libc, such as system.</p>
+<p>More info <a href="https://ir0nstone.gitbook.io/notes/types/stack/return-oriented-programming/calling-conventions">here</a></p>
+<h2 id="types-of-rop">Types of ROP:</h2>
+<ul>
+<li>[[Ret2CSU]]</li>
+<li>[[Ret2PLT]]</li>
+<li>[[Ret2libc]]</li>
+<li>[[Ret2Syscall]]</li>
+<li>[[SRop]]</li>
+</ul>
+<h1 id="note">NOTE!!!!</h1>
+<p>My mind is completely blown!!!! x86_64/32 DOES NOT have any demand that code exeuction must be aligned to a specific number. That is to say, if you can jump to the middle of the gadget, and if that happens to be valid assmebly code, it will run perfectly!!!!!</p>
+<ol>
+<li>Of course, <code>mov</code>s between registers are equivalent to having control over all of these regs.</li>
+<li>xor gadgets can be used instead of pop, since <code>xor num, num</code> is always 0, and <code>xor 0, num</code>, is always num. Therefore:
+a. <code>pop r13</code>
+b. <code>xor r12, r12</code>
+c. <code>xor r12, r13</code>
+will allow us full control over both r12 and r13.</li>
+<li>xchg will allow us to switch values between two registers.</li>
+</ol>
+<h2 id="finding-gadgets">Finding gadgets</h2>
+<ol>
+<li>You can use ROPGadget</li>
+<li>And radare2's <code>/R</code> command (<code>/Rl</code> for the chain to be in the same line)</li>
+<li>Ropper also exists, though i haven't tried it so far.</li>
+</ol>
+
+
+		
+
+	</main>
+	<footer id="site-footer">
+</footer>
+
+
+</body>
+</html>

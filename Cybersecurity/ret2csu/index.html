@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" data-theme="dark">
+<head>
+	<!-- 2025-04-14 Mon 14:53 -->
+	<meta charset="UTF-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#9ac2c2" />
+	<title>404 - Gio's site</title>
+	<link rel="canonical" href="https://giogiobestcat.github.io/Cybersecurity/ret2csu/" /><link rel="icon" type="image/png" href="https://giogiobestcat.github.io/favicon.png" />
+
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://giogiobestcat.github.io/apple-touch-icon.png" />
+<style type="text/css">
+	:root {--accent-color: #9ac2c2;}</style>
+
+			<link type="text/css" rel="stylesheet" href="https://giogiobestcat.github.io/style.css" />
+			<script type="text/javascript" defer  src="https://giogiobestcat.github.io/closable.js"></script>
+
+	<meta property="og:site_name" content="Gio&#x27;s site" />
+	<meta property="og:title" content="404 - Gio's site" />
+	<meta property="og:url" content="https://giogiobestcat.github.io/Cybersecurity/ret2csu/" />
+	<meta property="og:description" content="" /><meta property="og:image" content="https://giogiobestcat.github.io/card.png" /><meta property="og:locale" content="en_US" />
+</head>
+
+<body>
+<main id="main-content">
+		
+<h1></h1><h1 id="ret2csu">Ret2CSU</h1>
+<p>Dynamically linked binaries need to have some code stored on them in order for the dynmic linking process to be even viable.
+In certain cases,   where the amount of gadgets available for use is scarce, it might be wise to turn to these functions, for more gadgets.</p>
+<p>CSU stands for C Startup. It refers to the set of object files and source code that handle the initialization of a C program before the main function is called. This includes:
+- Setting up the runtime environment (the stack, for example.)
+- Initializing global variables.
+- Calling constructors of C++ objects (if present).
+- Finally, invoking the main function.</p>
+<p>These functions contain within them a selection of gadgets that we can use to populate registers we lack gadgets for, most importantly <code>__libc_csu_init</code>, which contains the following two gadgets:</p>
+<p><code>0x004011a2      5b             pop rbx 0x004011a3      5d             pop rbp 0x004011a4      415c           pop r12 0x004011a6      415d           pop r13 0x004011a8      415e           pop r14 0x004011aa      415f           pop r15 0x004011ac      c3             ret</code></p>
+<p><code>0x00401188      4c89f2         mov rdx, r14                ; char **ubp_av 0x0040118b      4c89ee         mov rsi, r13                ; int argc 0x0040118e      4489e7         mov edi, r12d               ; func main 0x00401191      41ff14df       call qword [r15 + rbx*8]</code></p>
+
+
+		
+
+	</main>
+	<footer id="site-footer">
+</footer>
+
+
+</body>
+</html>

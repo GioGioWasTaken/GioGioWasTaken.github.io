@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" data-theme="dark">
+<head>
+	<!-- 2025-04-14 Mon 14:53 -->
+	<meta charset="UTF-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#9ac2c2" />
+	<title>404 - Gio's site</title>
+	<link rel="canonical" href="https://giogiobestcat.github.io/Cybersecurity/linking/" /><link rel="icon" type="image/png" href="https://giogiobestcat.github.io/favicon.png" />
+
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://giogiobestcat.github.io/apple-touch-icon.png" />
+<style type="text/css">
+	:root {--accent-color: #9ac2c2;}</style>
+
+			<link type="text/css" rel="stylesheet" href="https://giogiobestcat.github.io/style.css" />
+			<script type="text/javascript" defer  src="https://giogiobestcat.github.io/closable.js"></script>
+
+	<meta property="og:site_name" content="Gio&#x27;s site" />
+	<meta property="og:title" content="404 - Gio's site" />
+	<meta property="og:url" content="https://giogiobestcat.github.io/Cybersecurity/linking/" />
+	<meta property="og:description" content="" /><meta property="og:image" content="https://giogiobestcat.github.io/card.png" /><meta property="og:locale" content="en_US" />
+</head>
+
+<body>
+<main id="main-content">
+		
+<h1></h1><h2 id="lazy-binding-process">Lazy binding process:</h2>
+<p>Whenever an external symbol is called, the assembly will call a stub, which is a block of assembly code that either invokes the dynamic linker to locate and write the address of the symbol into the GOT, or if the address exists jumps there.</p>
+<h1 id="ld-so-and-linux-ld-so">ld.so and linux-ld.so</h1>
+<p>This is where the magic happens. These binaries are responsible for linking all the <code>.so</code> files we use when programming with <code>C</code>. They locate the symbols used by the dynamically linked program, and they resolve these entries inside the <code>.got</code> table <a href="https://giogiobestcat.github.io/Cybersecurity/linking/GOT_PLT.md">read_more</a>.</p>
+<p><code>ld.so</code> is used for the older <code>a.out</code> file format, and <code>linux-ld.so</code> is used for the far more modern <a href="https://giogiobestcat.github.io/Cybersecurity/linking/ELF.md"> ELF </a> format.</p>
+<p>They search for the <code>.so</code>s like so (from <code>man ld.so</code>):</p>
+<h3 id="first-things-first">First things first:</h3>
+<p>The dynamic linker can be run either indirectly by running some dynamically linked program or shared object (in which case no command-line options to the dynamic linker can be passed and, in the <code>ELF</code> case, the dynamic linker which is stored in the <code>.interp</code> section of the program is executed)</p>
+<p>or directly by running: <code>/lib/ld-linux.so.*  [OPTIONS] [PROGRAM [ARG]</code></p>
+<h3 id="locating-the-shared-objects">Locating the shared objects:</h3>
+<p>When resolving shared object dependencies, the dynamic linker first inspects each dependency string to see if it contains a slash (this can occur if a shared object pathname containing slashes was specified at link time).  If a slash is found, then the dependency string is interpreted as a (relative or absolute) pathname, and the shared object is loaded using that pathname.</p>
+<p>Otherwise, If a shared object dependency does not contain a slash, then it is searched for in the following order:</p>
+<p>(1)  Using the directories specified in the <code>DT_RPATH</code> dynamic
+section attribute of the binary if present and <code>DT_RUNPATH</code>
+attribute does not exist.</p>
+<p>(2)  Using the environment variable <code>LD_LIBRARY_PATH</code>, unless the
+executable is being run in secure-execution mode (see
+below), in which case this variable is ignored.</p>
+<p>(3)  Using the directories specified in the <code>DT_RUNPATH</code> dynamic
+section attribute of the binary if present.  Such
+directories are searched only to find those objects required
+by <code>DT_NEEDED</code> (direct dependencies) entries and do not apply
+to those objects' children, which must themselves have their
+own <code>DT_RUNPATH</code> entries.  This is unlike <code>DT_RPATH</code>, which is
+applied to searches for all children in the dependency tree.</p>
+<p>(4)  From the cache file <code>/etc/ld.so.cache</code>, which contains a
+compiled list of candidate shared objects previously found
+in the augmented library path.  If, however, the binary was
+linked with the <code>-z nodefaultlib</code> linker option, shared
+objects in the default paths are skipped.  Shared objects
+installed in hardware capability directories (see below) are
+preferred to other shared objects.</p>
+<p>(5)  In the default path <code>/lib</code>, and then <code>/usr/lib</code>.  (On some
+64-bit architectures, the default paths for 64-bit shared
+objects are <code>/lib64</code>, and then <code>/usr/lib64</code>.)  If the binary was
+linked with the <code>-z nodefaultlib</code> linker option, this step is
+skipped.</p>
+<p>It is thanks to the metadata stored in the <code>ELF</code> binary, that it's able to identify which are the dependencies it needs to resolve by looking into these directories.</p>
+<p>The elf also contains a <code>.gnu.hash</code>  section, which will serve it to efficiently retrieve the function in question, for example <code>puts</code>, from <code>libc.so.6</code>'s symbol table.</p>
+
+
+		
+
+	</main>
+	<footer id="site-footer">
+</footer>
+
+
+</body>
+</html>

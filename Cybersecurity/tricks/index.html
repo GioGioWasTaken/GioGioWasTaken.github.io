@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" data-theme="dark">
+<head>
+	<!-- 2025-04-14 Mon 14:53 -->
+	<meta charset="UTF-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#9ac2c2" />
+	<title>404 - Gio's site</title>
+	<link rel="canonical" href="https://giogiobestcat.github.io/Cybersecurity/tricks/" /><link rel="icon" type="image/png" href="https://giogiobestcat.github.io/favicon.png" />
+
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://giogiobestcat.github.io/apple-touch-icon.png" />
+<style type="text/css">
+	:root {--accent-color: #9ac2c2;}</style>
+
+			<link type="text/css" rel="stylesheet" href="https://giogiobestcat.github.io/style.css" />
+			<script type="text/javascript" defer  src="https://giogiobestcat.github.io/closable.js"></script>
+
+	<meta property="og:site_name" content="Gio&#x27;s site" />
+	<meta property="og:title" content="404 - Gio's site" />
+	<meta property="og:url" content="https://giogiobestcat.github.io/Cybersecurity/tricks/" />
+	<meta property="og:description" content="" /><meta property="og:image" content="https://giogiobestcat.github.io/card.png" /><meta property="og:locale" content="en_US" />
+</head>
+
+<body>
+<main id="main-content">
+		
+<h1></h1><h1 id="things-i-discovered-while-pwnin">Things I discovered while pwnin' !</h1>
+<ul>
+<li>Argv and envp can be fully controlled with pwntools.</li>
+<li>argv[0] (specifically) can be controlled with a symlink, by linking a program with a name of our choice to the target binary, and then running this program.</li>
+<li>We can pass no input to scanf by passing - to a %d modifier.</li>
+<li>We can use ln -s /bin/sh "something" in order to make "something" be a symbolic link to /bin/sh. This will cause execve("something") to be equivalent to execve("/bin/sh"), which is useful when replacing the GOT address of say, a puts() function with system.</li>
+<li><code>fmtstr_payload(offset(usually 6),{ &lt;absolute addr&gt; :&lt;value&gt; },write_size='int')</code></li>
+<li>///////....bin/sh is a valid way to call it. This is true for any path in general.</li>
+</ul>
+<h1 id="useful-terminal-commands">Useful terminal commands</h1>
+<p>readelf -l {elf}  - find useful information like the entry point of the binary, architecture, sections, etc</p>
+<p>objdump -j .plt -d {elf} - print plt function addresses</p>
+
+
+		
+
+	</main>
+	<footer id="site-footer">
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" data-theme="dark">
+<head>
+	<!-- 2025-04-14 Mon 14:53 -->
+	<meta charset="UTF-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#9ac2c2" />
+	<title>404 - Gio's site</title>
+	<link rel="canonical" href="https://giogiobestcat.github.io/Cybersecurity/stack-facts/" /><link rel="icon" type="image/png" href="https://giogiobestcat.github.io/favicon.png" />
+
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://giogiobestcat.github.io/apple-touch-icon.png" />
+<style type="text/css">
+	:root {--accent-color: #9ac2c2;}</style>
+
+			<link type="text/css" rel="stylesheet" href="https://giogiobestcat.github.io/style.css" />
+			<script type="text/javascript" defer  src="https://giogiobestcat.github.io/closable.js"></script>
+
+	<meta property="og:site_name" content="Gio&#x27;s site" />
+	<meta property="og:title" content="404 - Gio's site" />
+	<meta property="og:url" content="https://giogiobestcat.github.io/Cybersecurity/stack-facts/" />
+	<meta property="og:description" content="" /><meta property="og:image" content="https://giogiobestcat.github.io/card.png" /><meta property="og:locale" content="en_US" />
+</head>
+
+<body>
+<main id="main-content">
+		
+<h1></h1><h1 id="stack-alignment">Stack alignment</h1>
+<p>Alignment Requirement: Many systems require that memory allocations be aligned to certain boundaries (e.g., 16 bytes). Proper alignment can improve performance due to the way CPUs handle memory access, and certain types of data may have specific alignment requirements.</p>
+<h2 id="how-does-this-look-in-assembly">How does this look in assembly?</h2>
+<p>Well, it can be as simple as:</p>
+<pre data-lang="asm" style="background-color:#2b303b;color:#c0c5ce;" class="language-asm "><code class="language-asm" data-lang="asm"><span>
+</span><span style="color:#b48ead;">sub     </span><span style="color:#bf616a;">rsp</span><span>, </span><span style="color:#d08770;">15</span><span style="color:#65737e;">        ; Add padding
+</span><span style="color:#b48ead;">and     </span><span style="color:#bf616a;">rsp</span><span>, </span><span style="color:#d08770;">0xFFFFFFFFFFFFFFF0</span><span style="color:#65737e;"> ; Align to 16 bytes
+</span></code></pre>
+<p>or, in 32 bit:</p>
+<pre data-lang="asm" style="background-color:#2b303b;color:#c0c5ce;" class="language-asm "><code class="language-asm" data-lang="asm"><span>
+</span><span style="color:#b48ead;">sub     </span><span style="color:#bf616a;">esp</span><span>, </span><span style="color:#d08770;">15</span><span style="color:#65737e;">        ; Add padding
+</span><span style="color:#b48ead;">and     </span><span style="color:#bf616a;">esp</span><span>, </span><span style="color:#d08770;">0xFFFFFFF0</span><span style="color:#65737e;"> ; Align to 16 bytes
+</span></code></pre>
+<p>... And it can also look like this:</p>
+<pre data-lang="asm" style="background-color:#2b303b;color:#c0c5ce;" class="language-asm "><code class="language-asm" data-lang="asm"><span style="color:#b48ead;">lea    </span><span style="color:#bf616a;">rdx</span><span>, [</span><span style="color:#bf616a;">rax</span><span>+</span><span style="color:#d08770;">8</span><span>]</span><span style="color:#65737e;">         ; Add 8 for alignment adjustment
+</span><span style="color:#b48ead;">mov    </span><span style="color:#bf616a;">eax</span><span>, </span><span style="color:#d08770;">16</span><span style="color:#65737e;">              ; Set divisor to 16
+</span><span style="color:#b48ead;">sub    </span><span style="color:#bf616a;">rax</span><span>, </span><span style="color:#d08770;">1</span><span style="color:#65737e;">               ; Subtract 1 for rounding up
+</span><span style="color:#b48ead;">add    </span><span style="color:#bf616a;">rax</span><span>, </span><span style="color:#bf616a;">rdx</span><span style="color:#65737e;">             ; Add the current size plus 8 plus 15
+</span><span style="color:#b48ead;">mov    </span><span style="color:#bf616a;">ecx</span><span>, </span><span style="color:#d08770;">16</span><span style="color:#65737e;">              ; Set divisor to 16
+</span><span style="color:#b48ead;">mov    </span><span style="color:#bf616a;">edx</span><span>, </span><span style="color:#d08770;">0</span><span style="color:#65737e;">               ; Clear edx for division
+</span><span style="color:#b48ead;">div    </span><span style="color:#bf616a;">rcx</span><span style="color:#65737e;">                  ; Divide rax by 16
+</span><span style="color:#b48ead;">imul   </span><span style="color:#bf616a;">rax</span><span>, </span><span style="color:#bf616a;">rax</span><span>, </span><span style="color:#d08770;">16</span><span style="color:#65737e;">         ; Multiply quotient by 16
+</span></code></pre>
+<h1 id="stack-layout">Stack layout</h1>
+<ul>
+<li>The stack layout can be read about <a href="https://aeb.win.tue.nl/linux/hh/stack-layout.html">here</a></li>
+</ul>
+<h1 id="program-startup">Program startup</h1>
+<p>When an ELF file starts The ELF loader parses the ELF file, maps the various program segments in the memory, sets up the entry point and initializes the process stack. It puts ELF auxiliary vectors on the process stack along with other information like argc, argv, envp. After initialization, a process' stack looks something like this:</p>
+<h2 id="position-content-size-bytes-comment">position            content                     size (bytes) + comment</h2>
+<pre data-lang="C" style="background-color:#2b303b;color:#c0c5ce;" class="language-C "><code class="language-C" data-lang="C"><span>stack pointer -&gt;  [ argc = number of args ]     </span><span style="color:#d08770;">4
+</span><span>[ argv[</span><span style="color:#d08770;">0</span><span>] (pointer) ]         </span><span style="color:#d08770;">4   </span><span>(program name)
+</span><span>[ argv[</span><span style="color:#d08770;">1</span><span>] (pointer) ]         </span><span style="color:#d08770;">4
+</span><span>[ argv[</span><span style="background-color:#bf616a;color:#2b303b;">..</span><span>] (pointer) ]        </span><span style="color:#d08770;">4 </span><span>* x
+</span><span>[ argv[n - </span><span style="color:#d08770;">1</span><span>] (pointer) ]     </span><span style="color:#d08770;">4
+</span><span>[ argv[n] (pointer) ]         </span><span style="color:#d08770;">4   </span><span>(= </span><span style="color:#d08770;">NULL</span><span>)
+</span><span>
+</span><span>[ envp[</span><span style="color:#d08770;">0</span><span>] (pointer) ]         </span><span style="color:#d08770;">4
+</span><span>[ envp[</span><span style="color:#d08770;">1</span><span>] (pointer) ]         </span><span style="color:#d08770;">4
+</span><span>[ envp[</span><span style="background-color:#bf616a;color:#2b303b;">..</span><span>] (pointer) ]        </span><span style="color:#d08770;">4
+</span><span>[ envp[terminator] (pointer) ]      </span><span style="color:#d08770;">4   </span><span>(= </span><span style="color:#d08770;">NULL</span><span>)
+</span><span>
+</span><span>[ auxv[</span><span style="color:#d08770;">0</span><span>] (Elf32_auxv_t) ]    </span><span style="color:#d08770;">8
+</span><span>[ auxv[</span><span style="color:#d08770;">1</span><span>] (Elf32_auxv_t) ]    </span><span style="color:#d08770;">8
+</span><span>[ auxv[</span><span style="background-color:#bf616a;color:#2b303b;">..</span><span>] (Elf32_auxv_t) ]   </span><span style="color:#d08770;">8
+</span><span>[ auxv[terminator] (Elf32_auxv_t) ] </span><span style="color:#d08770;">8   </span><span>(= AT_NULL vector)
+</span><span>
+</span><span>[ padding ]                   </span><span style="color:#d08770;">0 </span><span>- </span><span style="color:#d08770;">16
+</span><span>
+</span><span>[ argument ASCIIZ strings ]   &gt;= </span><span style="color:#d08770;">0
+</span><span>[ environment ASCIIZ str. ]   &gt;= </span><span style="color:#d08770;">0
+</span><span>
+</span><span>  (</span><span style="color:#d08770;">0xbffffffc</span><span>)      [ end marker ]                </span><span style="color:#d08770;">4   </span><span>(= </span><span style="color:#d08770;">NULL</span><span>)
+</span><span>
+</span><span>  (</span><span style="color:#d08770;">0xc0000000</span><span>)      &lt; bottom of stack &gt;           </span><span style="color:#d08770;">0   </span><span>(virtual)
+</span><span>
+</span></code></pre>
+<hr />
+<p>Therefore, if we are able to leak info from the stack, we can leak the Vdso address using AT_SYSINFO(This is certain), as well as the stack address using the AT_RAND elf auxiliary, which points to the location in the stack right after the auxillary vector (I think, need further confirmation on this part.)</p>
+<h2 id="elf-auxillary-vectors">ELF auxillary vectors:</h2>
+<p>ELF auxiliary vectors are a mechanism to transfer certain kernel level information to the user processes. An example of such an information is the pointer to the system call entry point in the memory (AT_SYSINFO); this information is dynamic in nature and is only known after kernel has finished loading.</p>
+<p>The information is passed on to the user processes by binary loaders which are part of the kernel subsystem itself; either built-in the kernel or a kernel module. Binary loaders convert a binary file, a program, into a process on the system. Usually there is a different loader for each binary format; thankfully there are not many binary formats - most of the linux based systems now use ELF binaries. ELF binary loader is defined in the following file /usr/src/linux/fs/binfmt_elf.c.</p>
+
+
+		
+
+	</main>
+	<footer id="site-footer">
+</footer>
+
+
+</body>
+</html>
